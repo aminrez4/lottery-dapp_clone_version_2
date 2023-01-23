@@ -19,6 +19,7 @@ const PotCard = () => {
     isLotteryAuthority,
     setTicketPrice,
     lotteryPot,
+    lottery,
     buyTicket,
     createLottery,
     pickWinner,
@@ -27,7 +28,7 @@ const PotCard = () => {
     claimPrize,
     lotteryHistory
   }=useAppContext()
-
+  
   const clickHandler=()=>{
     setShowInput(true)
   }
@@ -65,11 +66,11 @@ const PotCard = () => {
         <span className={style.textAccent}>#{lotteryId}</span>
       </div>
       <div className={style.pot}>Pot 💰 : {lotteryPot} SOL</div>
-      <div className={style.recentWinnerTitle}>🏆Recent Winner🏆</div>
+      <div className={style.recentWinnerTitle}>👤Authority👤</div>
       <div className={style.winner}>
-        {lotteryHistory?.length &&
+        {lottery?.authority &&
           shortenPk(
-            lotteryHistory[lotteryHistory.length - 1].winnerAddress.toBase58()
+            lottery.authority.toBase58()
           )}
       </div>
       {connected ? (
@@ -92,11 +93,11 @@ const PotCard = () => {
             </div>
           )}
 
-          <div className={style.btn} onClick={clickHandler}>
+          {lottery?.winnerId && <div className={style.btn} onClick={clickHandler}>
             Create lottery
-          </div>
+          </div>}
 
-          {showInput && <div className="w-full flex flex-col items-center mt-6  justify-center">
+          {showInput && lottery.winnerId && <div className="w-full flex flex-col items-center mt-6  justify-center">
             <input type="number" placeholder="Enter the ticket price in SOL" className="bg-red-900 w-[50%] placeholder:text-yellow-400 placeholder:text-center input focus:outline-none rounded-md border-yellow-200 border py-5 text-yellow-200 text-center" onChange={setValue}/>
             <button onClick={createLottery} className="bg-yellow-300 font-bold text-red-900 text-lg px-8 mt-4 rounded-lg hover:bg-yellow-500 py-3">Create</button>
             </div>

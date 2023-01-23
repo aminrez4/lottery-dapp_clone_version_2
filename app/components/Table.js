@@ -10,6 +10,7 @@ const Table = () => {
   
   return (
     <div className={style.wrapper}>
+        <div className="text-indigo-200 text-3xl py-4 border-b text-bold bg-gray-900 w-full text-center">Hall of Fame</div>
       <div className={style.tableHeader}>
         <div className={style.addressTitle}>Lottery No.</div>
         <div className={style.addressTitle}>Address</div>

@@ -5,6 +5,8 @@ import {BsStackOverflow} from 'react-icons/bs';
 import {BsTwitter} from 'react-icons/bs';
 import {BsGithub} from 'react-icons/bs';
 import {SiLeetcode} from 'react-icons/si'
+import {SiGeeksforgeeks} from 'react-icons/si'
+import {SiCodingninjas} from 'react-icons/si'
 const Footer = () => {
   return (
     <div className='bg-[#0c0303]  flex justify-between items-center py-4 px-5'>
@@ -27,6 +29,12 @@ const Footer = () => {
         </a>
         <a href="https://leetcode.com/kalsidipen/" target="_blank" rel="noopener noreferrer">
           <SiLeetcode size="25px"/>
+        </a>
+        <a href="https://auth.geeksforgeeks.org/user/kalsidipen/" target="_blank" rel="noopener noreferrer">
+          <SiGeeksforgeeks size="25px"/>
+        </a>
+        <a href="https://profile.codingninjas.com/d3fc1db6-c409-444a-9937-2d7abb45b134?_ga=2.92714142.2096200887.1674460594-1706124443.1671374508" target="_blank" rel="noopener noreferrer">
+          <SiCodingninjas size="25px"/>
         </a>
       </div>
     </div>
