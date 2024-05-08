@@ -1,14 +1,18 @@
 import { createContext, useContext, useMemo , useEffect , useState} from "react";
 import { BN } from "@project-serum/anchor";
-import { SystemProgram , LAMPORTS_PER_SOL} from "@solana/web3.js";
+import { SystemProgram , LAMPORTS_PER_SOL, PublicKey} from "@solana/web3.js";
 import { useAnchorWallet , useConnection } from "@solana/wallet-adapter-react";
 import bs58 from "bs58";
+import { getOrCreateAssociatedTokenAccount,  TOKEN_2022_PROGRAM_ID, } from "@solana/spl-token";
+
 import{
   getLotteryAddress,
   getMasterAddress,
   getProgram,
   getTicketAddress,
   getTotalPrize,
+  getFeesAmount
+
 } from "../utils/program"
 
 import { confirmTx, importTX , mockWallet } from "../utils/helper"
@@ -16,6 +20,7 @@ import { confirmTx, importTX , mockWallet } from "../utils/helper"
 import toast from "react-hot-toast"
 
 export const AppContext = createContext();
+
 
 export const AppProvider = ({ children }) => {
 
@@ -29,8 +34,15 @@ export const AppProvider = ({ children }) => {
   const [isLoading , setIsLoading] = useState(true);
   const [userWinningId , setUserWinningId] = useState(false)
   const [lotteryHistory , setLotteryHistory] = useState([])
+  const [feesPrize , setFeesPrize] = useState("0")
+  // const [winner , setWinner] = useState("000000000000000000000000")
+  const [userWallet , setUserWallet] = useState("000000000000000000000000")
+
 
   //get our provider 
+  const mint = new PublicKey("78yuNs9f6eqYEFNcxec3mkiLERNqpLZg6SA3nkyzvPLj"); // account propietario della Mint Authority
+  const ASSOCIATED_TOKEN_PROGRAM_ID = new PublicKey('ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL');
+
   const {connection}=useConnection()
   const wallet = useAnchorWallet()
   const program = useMemo(()=>{
@@ -46,6 +58,7 @@ export const AppProvider = ({ children }) => {
   useEffect(()=>{
     if(!lottery) return 
     getPot()
+    getFees()
     getHistory()
   },[lottery])
 
@@ -89,6 +102,11 @@ export const AppProvider = ({ children }) => {
   const getPot=()=>{
       const pot = getTotalPrize(lottery);
       setLotteryPot(pot);
+  }
+
+  const getFees= async ()=>{
+    const fee = await getFeesAmount();
+    setFeesPrize(fee);
   }
 
   const getHistory = async()=>{
@@ -155,6 +173,38 @@ export const AppProvider = ({ children }) => {
       }
   }
 
+  
+
+const play =async()=>{
+  try{
+    console.log("WALLET ADRESS PARTECIPANTE",  wallet.publicKey.toBase58())
+
+    //RETRIVE ASSOCIATED TOKEN ACCOUNT
+    const ataAccount = await getOrCreateAssociatedTokenAccount(
+      connection,
+      wallet.publicKey,
+      mint,
+      wallet.publicKey,
+      true,
+      "confirmed",
+      null,
+      TOKEN_2022_PROGRAM_ID,
+      ASSOCIATED_TOKEN_PROGRAM_ID
+    );
+    console.log("WALLET  ata ADRESS PARTECIPANTE",  ataAccount.address.toBase58())
+    setUserWallet(ataAccount.address.toBase58())
+    toast('Processing your request...', {
+      icon: '⏱️',
+    });
+   
+    // updateState();
+    // toast.success("Ticket Bought Successfully!!")
+    // getPot()
+  }catch(err){
+    toast.error(err.message)
+  }
+}
+
   const pickWinner= async()=>{
     try{
       const txHash=await program.methods.pickWinner(lotteryId).accounts({
@@ -209,6 +259,7 @@ export const AppProvider = ({ children }) => {
     }
   }
 
+
   return (
     <AppContext.Provider
       value={{
@@ -230,12 +281,17 @@ export const AppProvider = ({ children }) => {
         lottery,
         isFinished:lottery && lottery.winnerId,
         canClaim:lottery && !lottery.claimed && userWinningId,
+        feesPrize,
+        play,
+        userWallet
       }}
     >
       {children}
     </AppContext.Provider>
   );
 };
+
+
 
 export const useAppContext = () => {
   return useContext(AppContext);

@@ -14,14 +14,29 @@
 }
 
 .title {
-  font-size: 2rem;
+  font-size: 4.5rem;
   font-weight: bolder;
-  color: yellow;
+  color: rgb(255, 25, 48);
+  text-align: center;
+  margin-bottom: 20px;
+}
+.title {
+  font-size: 2.5rem;
+  font-weight: bolder;
+  color: rgb(255, 25, 48);
   text-align: center;
   margin-bottom: 20px;
 }
 
 .pot {
+  font-size: 3.5rem;
+  font-weight: bolder;
+  color: #fff;
+  text-align: center;
+  flex: 1;
+}
+
+.potTitle {
   font-size: 1.5rem;
   font-weight: bolder;
   color: #fff;

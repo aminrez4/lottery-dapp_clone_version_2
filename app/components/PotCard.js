@@ -26,7 +26,10 @@ const PotCard = () => {
     isFinished,
     canClaim,
     claimPrize,
-    lotteryHistory
+    lotteryHistory,
+    feesPrize,
+    play,
+    userWallet
   }=useAppContext()
   
   const clickHandler=()=>{
@@ -37,47 +40,33 @@ const PotCard = () => {
       console.log(ticketPrice);
   }
 
-  if (!isMasterInitialized)
+  if (!connected)
     return (
       <div className={`${style.wrapper}`}>
         <div className={style.title}>
           <span className={style.title}>#{lotteryId}</span>
         </div>
-        {connected ? (
-          <>
-            <div className={style.btn} onClick={initMaster}>
-              Initialize master
-            </div>
-          </>
-        ) : (
-          // Wallet multibutton goes here
-          <div className="w-full hidden  items-center justify-center">
-          <WalletMultiButton />
-          </div>
-        )}
+        <WalletMultiButton />
+     
       </div>
     );
 
   return (
     <div className={style.wrapper}>
       <Toaster />
+      <div className={style.potTitle}>💵 Total Prize 💵</div>
       <div className={style.title}>
         
-        <span className={style.textAccent}>#{lotteryId}</span>
+        <span className={style.textAccent}>{feesPrize}</span>
+        <span> $BUZZ</span>
       </div>
-      <div className={style.pot}>Pot 💰 : {lotteryPot} SOL</div>
-      <div className={style.recentWinnerTitle}>👤Authority👤</div>
-      <div className={style.winner}>
-        {lottery?.authority &&
-          shortenPk(
-            lottery.authority.toBase58()
-          )}
-      </div>
+      <div className={style.potTitle}> {userWallet}</div>
+      
       {connected ? (
         <>
           {!isFinished && (
-            <div className={style.btn} onClick={buyTicket}>
-              Enter
+            <div className={style.btn} onClick={play}>
+              Play
             </div>
           )}
 

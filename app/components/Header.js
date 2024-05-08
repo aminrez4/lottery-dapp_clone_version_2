@@ -7,7 +7,7 @@ const Header = () => {
     <div className={`${style.wrapper}`}>
       <div className="flex space-x-3 items-center justify-center">
 
-      <div className={`${style.title}`}>Lotterie</div>
+      <div className={`${style.title}`}>THE BUZZ RAFFLE</div>
       <img src="https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/solana-sol-icon.png" alt="" className="w-10 cursor-pointer h-10"/>
       </div>
 
