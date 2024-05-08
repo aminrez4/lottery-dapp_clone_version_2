@@ -8,7 +8,7 @@ const Header = () => {
       <div className="flex space-x-3 items-center justify-center">
 
       <div className={`${style.title}`}>THE BUZZ RAFFLE</div>
-      <img src="https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/solana-sol-icon.png" alt="" className="w-10 cursor-pointer h-10"/>
+      <img src="https://i.postimg.cc/0NfnRKZy/Progetto-senza-titolo-removebg-preview.png" alt="" className="w-10 cursor-pointer h-10"/>
       </div>
 
       <WalletMultiButton/>

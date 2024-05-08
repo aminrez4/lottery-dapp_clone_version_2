@@ -41,11 +41,24 @@
 .amountTitle {
   font-size: 1.3rem;
   font-weight: bolder;
-  color: yellow;
+  color: white;
 }
 
 .addressTitle {
   font-size: 1.3rem;
   font-weight: bolder;
-  color: yellow;
+  color: white;
+}
+
+.bgHeader {
+  background-color:  rgb(33, 33, 33) ;
+  font-size: 1.875rem; /* 30px */
+  line-height: 2.25rem; /* 36px */
+  padding-top: 1rem; /* 16px */
+  padding-bottom: 1rem; /* 16px */
+  border-bottom-width: 1px;
+  font-weight: 700;
+  width: 100%;
+  text-align: center;
+  color:  rgb(212, 10, 10);
 }

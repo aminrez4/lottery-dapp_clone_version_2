@@ -27,8 +27,8 @@ export default function Home() {
         <WalletModalProvider>
           <AppProvider>
         <Head>
-        <title>Solana Lottery Dapp</title>
-        <link rel="shortcut icon" href="https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/solana-sol-icon.png" />
+        <title>The Buzz Raffle</title>
+        <link rel="shortcut icon" href="https://i.postimg.cc/0NfnRKZy/Progetto-senza-titolo-removebg-preview.png" />
       </Head>
         <Header />
         <PotCard />
